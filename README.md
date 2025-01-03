@@ -1,29 +1,19 @@
 # OCSAug
 OCSAug: Diffusion-based Optical Chemical Structure Data Augmentation for Improved Hand-drawn Chemical Structure Image Recognition
 
-train / test datasets : DECIMER
-
-github 디렉토리 구조
-
-RePaint
-
-guided-diffusion
-
-MolScribe
-
 ## README.md
 
 codebase
 
-link[MolScribe](https://github.com/thomas0809/MolScribe.git)
+[MolScribe](https://github.com/thomas0809/MolScribe.git)
 
-link[RePaint](https://github.com/andreas128/RePaint.git)
+[RePaint](https://github.com/andreas128/RePaint.git)
 
-link[guided-diffusion](https://github.com/openai/guided-diffusion.git)
+[guided-diffusion](https://github.com/openai/guided-diffusion.git)
 
 ## RePaint
 
-### environment 세팅
+### environment
 
 ```bash
 cd RePaint
@@ -53,7 +43,10 @@ TRAIN_FLAGS=“—use_fp16 false  —batch_size 32 —microbatch 1 —lr 2e-5 �
 python scripts/image_train.py --data_dir path/to/images $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
 ```
 
-Note: export OPENAI_LOGDIR sets the location for DDPM training logs. If not set, logs are saved in the /tmp folder. The model checkpoints are saved at intervals specified by save_interval and are named in the format opt_0.999_{step}, ema_0.999_{step}, model_0.999_{step}. Use the ema prefixed file for sampling. Training does not have a predefined maximum step; it should be determined based on the quality of image samples from the checkpoints. The checkpoint for the model used in the paper is ema_0.999_210000.pt.
+Note: `export OPENAI_LOGDIR` sets the location for DDPM training logs. If not set, logs are saved in the `/tmp` folder. The model checkpoints are saved at intervals specified by `save_interval` and are named in the format `opt_0.999_{step}`, `ema_0.999_{step}`, `model_0.999_{step}`. Use the `ema` prefixed file for sampling. Training does not have a predefined maximum step; it should be determined based on the quality of image samples from the checkpoints. The checkpoint for the model used in the paper is `ema_0.999_210000.pt`.
+
+You can download this checkpoint from the following Google Drive link: [Download ema_0.999_210000.pt](https://drive.google.com/drive/folders/1VUrszbXm2FBVL6JzIH-0H5L1XSxMV7DL?usp=drive_link)
+
 
 ### RePaint
 
@@ -63,12 +56,14 @@ Example configuration in molecule.yml:
 
 ```yaml
 name: molecule_example
+num_samples: 2,894
+model_path: # Add your model file path here, e.g., './models/your_model_file.pt'
 data:
   eval:
     paper_face_mask:
       mask_loader: true
-      gt_path: ./data/datasets/gts/face
-      mask_path: ./data/datasets/gt_keep_masks/face
+      gt_path: # Path to the ground truth images, e.g., './data/datasets/gts/molecule'
+      mask_path: # Path to the mask images, e.g., './data/datasets/gt_keep_masks/horizontal'
       image_size: 256
       class_cond: false
       deterministic: true
@@ -80,16 +75,14 @@ data:
       return_dataloader: true
       offset: 0
       max_len: 8
-      paths:
-        srs: ./log/face_example/inpainted
-        lrs: ./log/face_example/gt_masked
-        gts: ./log/face_example/gt
-        gt_keep_masks: ./log/face_example/gt_keep_mask
+      paths: # Specify save paths for processed files
+        srs: # Path to the sampling images, e.g., './log/molecule_example/inpainted'
+        lrs: # Path where images with ground truth overlaid by masks are saved, e.g., './log/molecule_example/gt_masked'
+        gts: # Path where ground truth images are saved, e.g., './log/molecule_example/gt'
+        gt_keep_masks: # Path where mask images are saved, e.g., './log/molecule_example/gt_keep_mask'
 ```
-
-After customizing name, gt_path, mask_path, and paths (srs, lrs, gts, gt_keep_masks):
-
-custom하고 저장한 후에
+After customizing `name`, `gt_path`, `mask_path`, and `paths` (`srs`, `lrs`, `gts`, `gt_keep_masks`):
+Ensure that the number of files in `gt_path` matches the number of files in `mask_path` to maintain consistency during processing.
 
 ```bash
 python test.py --conf_path confs/molecule_example.yml
@@ -99,7 +92,7 @@ Sampled files are saved in ./log/molecule_example/inpainted.
 
 ### MolScribe
 
-### environment 세팅
+### environment 
 
 ```bash
 cd MolScribe
@@ -110,70 +103,152 @@ wget -P ckpts https://huggingface.co/yujieq/MolScribe/resolve/main/swin_base_cha
 ```
 
 ## Data Files
+Access the implementation data through this [Google Drive link](https://drive.google.com/drive/folders/1VUrszbXm2FBVL6JzIH-0H5L1XSxMV7DL?usp=drive_link)
+### Data
+1. `filterered_DECIMER_train_train.csv` - Original training data
+2. `filterered_DECIMER_train_val.csv` - Original validation data
+3. `transform_rdkit.csv` - Original data augmented with RDKit images
+4. `transform_randepict.csv` - Original data augmented with Randepict images
+5. `transform_repaint.csv` - Original data augmented with RePaint images
+6. `s_repaint_horizontal.csv` - Horizontal image and SMILES augmentation
+7. `a_repaint_vertical.csv` - Vertical image and SMILES augmentation
+8. `filterered_DECIMER_3194_test.csv` - Original test data
 
-# data
-1. filterered_DECIMER_train_train.csv - original train data
-2. filterered_DECIMER_train_val.csv - original validation data
-3. transform_rdkit.csv - original + rdkit(image Augmentation)
-4. transform_randepict.csv - original + randepict(image Augmentation)
-5. transform_repaint.csv - original + repaint(image Augmentation)
-6. s_repaint_horizontal.csv - horizontal(image, SMILES Augmentation)
-7. a_repaint_vertical.csv - vertical(image, SMILES Augmentation)
-6. filterered_DECIMER_3194_test.csv - original test data
+### Image Directories
+1. `filterered_DECIMER_3194_train` - Contains original training and validation images.
+2. `filterered_DECIMER_3194_test` - Contains images for testing.
+3. `rdkit_image` - Contains images augmented using RDKit.
+4. `Randepict_DECIMER_train_sets_OCSR` - Contains images augmented using Randepict.
+5. `molecule_horizontal_example_1` - Contains images augmented using RePaint (horizontal).
+6. `molecule_horizontal_example_2` - Contains images augmented using RePaint (horizontal).
+7. `molecule_vertical_example_1` - Contains images augmented using RePaint (vertical).
+8. `molecule_vertical_example_2` - Contains images augmented using RePaint (vertical).
 
-# image_dir
-1. filterered_DECIMER_3194_train
-2. filterered_DECIMER_3194_test
-3. rdkit_image
-4. Randepict_DECIMER_train_sets_OCSR
-5. molecule_horizontal_example_1
-6. molecule_horizontal_example_2
-7. molecule_vertical_example_1 
-8. molecule_vertical_example_2
+### ZIP File Contents
+When you access the Google Drive link, you will find the following ZIP files, each containing specific image folders:
+- `DECIMER.zip` includes folders:
+  1. `filterered_DECIMER_3194_train`
+  2. `filterered_DECIMER_3194_test`
+- `RDKit.zip` includes the folder:
+  3. `rdkit_image`
+- `Randepict.zip` includes the folder:
+  4. `Randepict_DECIMER_train_sets_OCSR`
+- `RePaint.zip` includes folders:
+  5. `molecule_horizontal_example_1`
+  6. `molecule_horizontal_example_2`
+  7. `molecule_vertical_example_1`
+  8. `molecule_vertical_example_2`
+  
 
-MolScribe 훈련에 사용할 데이터 형식
+### Data Format for Training MolScribe
 
-csv파일 구성요소
+The CSV file used for training should include the following columns:
 
-columns 
+- `image_id`: Identifier for the image.
+- `file_path`: File path corresponding to the `image_id`. 
+- `SMILES`: SMILES notation associated with the `image_id`.
 
-image_id : image_identifier
-
-file_path : image_id의 image file path
-
-SMILES : image_id에 해당하는 SMILES
+**Important:** You must modify the `file_path` column to reflect your local directory structure before using the CSV file. This ensures the paths are correctly set up for accessing the images.
 
 ## Train
 
 ```bash
-bash train_scripts/s_repaint.sh
+bash train_scripts/train.sh
+```
+## train.sh example
+```sh
+#!/bin/bash
+
+NUM_NODES=1
+NUM_GPUS_PER_NODE=1
+NODE_RANK=0
+
+BATCH_SIZE=64
+ACCUM_STEP=1
+
+MASTER_PORT=$(shuf -n 1 -i 10000-65535)
+
+DATESTR=$(date +"%m-%d-%H-%M")
+SAVE_PATH=train_output/
+mkdir -p ${SAVE_PATH}
+
+set -x
+
+torchrun \
+    --nproc_per_node=$NUM_GPUS_PER_NODE --nnodes=$NUM_NODES --node_rank $NODE_RANK --master_addr localhost --master_port $MASTER_PORT \
+    custom_train.py \
+    --data_path data \
+    --train_file DECIMER/DECIMER/transfrom_repaint.csv \
+    --valid_file DECIMER/DECIMER/filtered_DECIMER_train_val.csv \
+    --vocab_file molscribe/vocab/vocab_chars.json \
+    --formats chartok_coords,edges \
+    --dynamic_indigo --augment --mol_augment \
+    --include_condensed \
+    --coord_bins 64 --sep_xy \
+    --input_size 256 \
+    --encoder swin_base \
+    --decoder transformer \
+    --encoder_lr 2e-5 \
+    --decoder_lr 2e-5 \
+    --save_path $SAVE_PATH --save_mode all \
+    --label_smoothing 0.1 \
+    --epochs 30 \
+    --batch_size $((BATCH_SIZE / NUM_GPUS_PER_NODE / ACCUM_STEP)) \
+    --gradient_accumulation_steps $ACCUM_STEP \
+    --use_checkpoint \
+    --warmup 0.02 \
+    --print_freq 200 \
+    --do_train --do_valid \
+    --fp16 --backend gloo \
+    --load_path ckpts/swin_base_char_aux_1m680k.pth \
+    --resume 2>&1
 ```
 
-sh파일 수정 옵션
+### Script Modification Options
 
-NUM_GPUS_PER_NODE : GPU 개수
+- `NUM_GPUS_PER_NODE`: Number of GPUs per node
+- `BATCH_SIZE`: Batch size
+- `SAVE_PATH`: Path to save checkpoint files and prediction files for validation sets
+- `train_file`: Path to training data
+- `valid_file`: Path to validation data
+- `epoch`: Number of epochs for fine-tuning
 
-BATCH_SIZE : batch size
+If you wish to train from scratch instead of fine-tuning, please refer to the MolScribe documentation.
 
-SAVE_PATH : 체크포인트 파일 및 validation sets에 대한 predict 파일 저장 경로
 
-train_file : train data path
-
-valid_file : validation data path
-
-epoch : fine-tuning epoch 수
-
-fine-tuning이 아닌 처음부터 훈련을 원한다면 MolScribe 참고하면 된다.
 
 ## Predict
 
 ```bash
 bash pred_scripts/predict.sh
 ```
+## predict.sh example
+```sh
+#!/bin/bash
 
-single checkpoint predict - single_predict.sh
+NUM_ITER=30 
 
-Iterative checkpoint predict - multi_predict.sh
+BASE_DIR="train_decimer/transform_repaint"
+IMAGE_PATH="data/DECIMER/DECIMER/filtered_DECIMER_3194_test"
+
+for i in $(seq 1 $NUM_ITER); do
+    MODEL_PATH="${BASE_DIR}/checkpoint_epoch_${i}.pth"
+    SAVE_PATH="${BASE_DIR}/prediction_test_test_${i}.csv" 
+
+    echo "save path: ${SAVE_PATH}" 
+
+    torchrun custom_predict.py \
+        --model_path ${MODEL_PATH} \
+        --image_folder ${IMAGE_PATH} \
+        --output_csv ${SAVE_PATH} \
+
+done
+
+echo "predict complete"
+
+```
+single checkpoint predict - single_predict.sh executes prediction using a single model checkpoint.
+Iterative checkpoint predict (predict.sh) - Repeatedly executes prediction using different model checkpoints across multiple iterations.
 
 ## Evaluate
 
@@ -185,10 +260,28 @@ bash evaluate_scripts/single_eval.sh
 bash evaluate_scripts/eval.sh
 ```
 
-[eval.sh](http://eval.sh) 파일에서
+## eval.sh example
+```sh
+#!/bin/bash
 
-Customize the BASE_DIR, GOLD_FILE, and PRED_PATH as needed in the evaluation scripts.
+NUM_ITER=30 
 
-single evaluate - single_eval.sh
+BASE_DIR="test_decimer/transform_repaint"
+GOLD_FILE="data/DECIMER/DECIMER/filtered_DECIMER_test.csv"
 
-Iterative evaluate - eval.sh
+echo "BASE_DIR : ${BASE_DIR}"
+for i in $(seq 1 $NUM_ITER); do
+    PRED_PATH="${BASE_DIR}/prediction_test_test_${i}.csv"
+
+    torchrun evaluate.py \
+        --gold_file ${GOLD_FILE} \
+        --pred_file ${PRED_PATH} \
+        --pred_field 'SMILES' \
+        --tanimoto
+
+done
+echo "evaluation complete"
+
+```
+single evaluate - single_eval.sh performs an evaluation using a single set of predictions.
+Iterative evaluate (eval.sh) - Performs evaluations in a repeated manner across multiple sets of predictions.
