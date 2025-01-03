@@ -1,8 +1,6 @@
 # OCSAug
 OCSAug: Diffusion-based Optical Chemical Structure Data Augmentation for Improved Hand-drawn Chemical Structure Image Recognition
 
-## README.md
-
 codebase
 
 [MolScribe](https://github.com/thomas0809/MolScribe.git)
@@ -10,6 +8,11 @@ codebase
 [RePaint](https://github.com/andreas128/RePaint.git)
 
 [guided-diffusion](https://github.com/openai/guided-diffusion.git)
+
+## Important Note Before You Begin
+Before starting with the setup or execution of any scripts, please ensure to **check and modify the `file_path`** in any provided CSV files or scripts. The file paths must be adjusted to match your local system's directory structure. This is crucial for the correct functioning of the data processing, training, and evaluation scripts. Failing to do so may result in errors or incorrect processing of data.
+
+
 
 ## RePaint
 
@@ -25,11 +28,13 @@ conda install -c conda-forge mpi4py
 conda install -c conda-forge openmpi
 ```
 
+After setting up the environment, use `cd ..` to move back to the parent directory.
+
 ### DDPM train
-
+Once back in the parent directory, change to the guided-diffusion directory:
 ```bash
+cd guided-diffusion
 mkdir ddpm_train_log
-
 export OPENAI_LOGDIR=ddpm_train_log
 
 MODEL_FLAGS=“—image_size 256 —attention_resolutions “32, 16, 8” —num_channerls 256 —num_head_channels 64 —num_res_blocks 2 —num_heads 4 —resblock_updown true —learn_sigma true —use_scale_shift_norm true —timestep_respacing “250”  —use_kl false —class_cond false —dropout 0.0“
@@ -85,6 +90,7 @@ After customizing `name`, `gt_path`, `mask_path`, and `paths` (`srs`, `lrs`, `gt
 Ensure that the number of files in `gt_path` matches the number of files in `mask_path` to maintain consistency during processing.
 
 ```bash
+cd RePaint
 python test.py --conf_path confs/molecule_example.yml
 ```
 
@@ -92,10 +98,17 @@ Sampled files are saved in ./log/molecule_example/inpainted.
 
 ### MolScribe
 
+After completing the sampling, use `cd ..` from the RePaint directory to return to the parent directory.
+
 ### environment 
+
 
 ```bash
 cd MolScribe
+
+# Deactivate any active conda environments, such as RePaint, before proceeding.
+conda deactivate
+
 conda env create -f environment.yml
 conda activate molscribe
 mkdir -p ckpts
