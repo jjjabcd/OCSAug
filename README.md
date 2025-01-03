@@ -260,8 +260,9 @@ done
 echo "predict complete"
 
 ```
-single checkpoint predict - single_predict.sh executes prediction using a single model checkpoint.
-Iterative checkpoint predict (predict.sh) - Repeatedly executes prediction using different model checkpoints across multiple iterations.
+`single_predict.sh` - single checkpoint predict (executes prediction using a single model checkpoint.)
+
+`predict.sh` - Iterative checkpoint predict (Repeatedly executes prediction using different model checkpoints across multiple iterations.)
 
 ## Evaluate
 
@@ -296,5 +297,5 @@ done
 echo "evaluation complete"
 
 ```
-single evaluate - single_eval.sh performs an evaluation using a single set of predictions.
-Iterative evaluate (eval.sh) - Performs evaluations in a repeated manner across multiple sets of predictions.
+`single_eval.sh` - single evaluate (performs an evaluation using a single set of predictions.)
+`eval.sh` - Iterative evaluate (Performs evaluations in a repeated manner across multiple sets of predictions.)
