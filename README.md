@@ -40,6 +40,9 @@ The downloaded data includes:
 You can download the original data from [DECIMER - Hand-drawn molecule images dataset](https://zenodo.org/records/6456306). The provided data is derived from this original dataset.
 
 ## Train
+
+move directory to guided-diffusion
+
 ### Configuration Flags
 ```bash
 mkdir ddpm_train_log
@@ -64,13 +67,15 @@ TRAIN_FLAGS=“—use_fp16 false  —batch_size 64 --microbatch 16—lr 2e-5 —
 ## Train scripts
 
 ```bash
-python scripts/image_train.py --data_dir data/train $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
+python scripts/image_train.py --data_dir ../data/train $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
 ```
 
 Note: `export OPENAI_LOGDIR` sets the location for DDPM training logs. If not set, logs are saved in the `/tmp` folder. The model checkpoints are saved at intervals specified by `save_interval` and are named in the format `opt_0.999_{step}`, `ema_0.999_{step}`, `model_0.999_{step}`. Use the `ema` prefixed file for sampling. Training does not have a predefined maximum step; it should be determined based on the quality of image samples from the checkpoints. 
 
 ## Sampling
 
+move directory to RePaint
+
 ```bash
-python test.py --conf_path scripts/molecule_example.yml
+python test.py --conf_path conf/molecule_example.yml
 ```
