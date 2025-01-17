@@ -52,8 +52,8 @@ use_ddim: false
 latex_name: OCSAug
 method_name: OCSAug
 image_size: 256
-model_path: ./ckpt/molecule_model.pt
-name: mole_horizontal_4
+model_path: ../ckpt/molecule_model.pt # ../guided-diffusion/ddpm_train_log/ema_0.9999_000000.pt
+name: molecule_example
 inpa_inj_sched_prev: true
 n_jobs: 1
 print_estimated_vars: true
