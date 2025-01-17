@@ -41,7 +41,10 @@ You can download the original data from [DECIMER - Hand-drawn molecule images da
 
 ## Train
 
-move directory to guided-diffusion
+Change to the guided-diffusion directory.
+```bash
+cd guided-diffusion
+```
 
 ### Configuration Flags
 ```bash
@@ -74,7 +77,10 @@ Note: `export OPENAI_LOGDIR` sets the location for DDPM training logs. If not se
 
 ## Sampling
 
-move directory to RePaint
+Change to the RePaint directory.
+```bash
+cd ../RePaint
+```
 
 ```bash
 python test.py --conf_path conf/molecule_example.yml
