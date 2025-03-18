@@ -1,20 +1,24 @@
 #!/bin/bash
 
 (
+cd RePaint/
 mkdir -p ckpt
 cd ckpt/
 gdown https://drive.google.com/uc?id=1onWVW-He48yEOXTWokxKMeG9QrJYSLl6
 cd ..
-mkdir -p data
-cd data/
 
-gdown https://drive.google.com/uc?id=1LZzzJ53yEUAMZ_rmW-byY9-w6D-A46oq
-unzip csv.zip
-rm csv.zip
+# Data Downlad for OCSR
 
-gdown https://drive.google.com/uc?id=1pfxuhMuXv5KIgW2blSG5kUNwyne5DtmW
-unzip image.zip
-rm image.zip
+# mkdir -p data
+# cd data/
+
+# gdown https://drive.google.com/uc?id=1LZzzJ53yEUAMZ_rmW-byY9-w6D-A46oq
+# unzip csv.zip
+# rm csv.zip
+
+# gdown https://drive.google.com/uc?id=1pfxuhMuXv5KIgW2blSG5kUNwyne5DtmW
+# unzip image.zip
+# rm image.zip
 
 mkdir -p test_mask_sample
 cd test_mask_sample/
