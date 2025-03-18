@@ -55,7 +55,7 @@ cd ../RePaint
 ```
 
 ```bash
-python test.py --conf_path confs/molecule_example.yml
+python test.py --conf_path conf/molecule_example.yml
 ```
 
 If you wish to sample using a trained model, you will need to run the following script. Ensure that the `model_path` parameter in the `molecule_example.yml` configuration file is set to the correct path where your trained model is stored. This parameter is crucial for the script to locate and use the model correctly.
