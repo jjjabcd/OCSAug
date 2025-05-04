@@ -29,23 +29,29 @@ pip install --upgrade gdown
 
 ## Data Download
 
-Execute the following command to download the data:
+You can obtain all required files by running the following scripts:
 
 ```bash
+# Download the pretrained diffusion model checkpoint
 bash download.sh
+
+# Download the OCSR dataset
+bash download_for_OCSR.sh
 ```
+Files downloaded by `bash download.sh`:
 
-The downloaded data includes:
+- `ckpt/molecule_model.pt`: Pretrained diffusion model checkpoint file
 
-- `data/test_image_sample`: Sample test images
-- `data/test_mask_sample`: Sample test masks
-- `data/image`: Image data
-- `data/csv`: CSV files
-- `ckpt/molecule_model.pt`: Model checkpoint file
+Files downloaded by `bash download_for_OCSR.sh`:
+- `data/image`: Image data for OCSR
+- `data/csv`: CSV files for OCSR
+- `hand_drawn_image/hand_drawn_image` : Hand-drawn image sets
 
 You can download the original data from [DECIMER - Hand-drawn molecule images dataset](https://zenodo.org/records/6456306). The provided data is derived from this original dataset.
 
 
+`data`, `ckpt` : [Link1](https://drive.google.com/drive/folders/1VUrszbXm2FBVL6JzIH-0H5L1XSxMV7DL?usp=sharing)
+`hand_drawn_image` : [Link2](https://drive.google.com/file/d/1Aetloltpf9FnXzYWt927RcQ7i5MOEdc5/view?usp=sharing)
 
 ## Sampling
 
