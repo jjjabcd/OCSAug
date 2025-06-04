@@ -6,7 +6,7 @@ OCSAug: Diffusion-based Optical Chemical Structure Data Augmentation for Improve
 In short, hand-drawn molecular structure images are processed through a diffusion-based data augmentation framework, which can generate new variations while preserving the essential structural characteristics. The framework takes hand-drawn molecular structure images as input and produces diverse augmented images that maintain the original features while introducing controlled variations, effectively expanding the dataset for improved molecular structure recognition.
 
 
-## codebase
+## Codebase
 
 [RePaint](https://github.com/andreas128/RePaint.git)
 
@@ -73,7 +73,7 @@ If you wish to sample using a trained model, you will need to run the following 
 
 Following this section, the document will provide instructions on how to train your model, detailing the necessary steps and configurations needed to effectively train a model using the provided dataset and parameters.
 
-## Train
+## Training
 
 Change to the guided-diffusion directory.
 ```bash
@@ -108,7 +108,7 @@ The `batch_size` of 64 should be tailored based on the available VRAM. If you pr
 TRAIN_FLAGS="--use_fp16 False --lr 2e-5 --batch_size 32  --microbatch 1 --log_interval 10 --save_interval 1000"
 ```
 
-## Train scripts
+## Training scripts
 
 ```bash
 python scripts/image_train.py --data_dir ../data/train $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
@@ -117,11 +117,11 @@ python scripts/image_train.py --data_dir ../data/train $MODEL_FLAGS $DIFFUSION_F
 Note: `export OPENAI_LOGDIR` sets the location for DDPM training logs. If not set, logs are saved in the `/tmp` folder. The model checkpoints are saved at intervals specified by `save_interval` and are named in the format `opt_0.999_{step}`, `ema_0.999_{step}`, `model_0.999_{step}`. Use the `ema` prefixed file for sampling. Training does not have a predefined maximum step; it should be determined based on the quality of image samples from the checkpoints. 
 
 
-# Author
+# Authors
 
-[Jin Hyuk Kim](https://scholar.google.com/citations?user=8ly72dcAAAAJ&hl=ko)
+- [Jin Hyuk Kim](https://scholar.google.com/citations?user=8ly72dcAAAAJ&hl=ko)
 
-[Jonghwan Choi](https://scholar.google.com/citations?user=4xSw9C8AAAAJ&hl=ko)
+- [Jonghwan Choi](https://scholar.google.com/citations?user=4xSw9C8AAAAJ&hl=ko)
 
 # Contacts
 
