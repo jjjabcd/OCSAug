@@ -1,16 +1,17 @@
 # OCSAug
 OCSAug: Diffusion-based Optical Chemical Structure Data Augmentation for Improved Hand-drawn Chemical Structure Image Recognition
 
-[Paper](https://link.springer.com/article/10.1007/s11227-025-07406-4)
+## Paper
+[10.1007/s11227-025-07406-4](https://link.springer.com/article/10.1007/s11227-025-07406-4)
 
 In short, hand-drawn molecular structure images are processed through a diffusion-based data augmentation framework, which can generate new variations while preserving the essential structural characteristics. The framework takes hand-drawn molecular structure images as input and produces diverse augmented images that maintain the original features while introducing controlled variations, effectively expanding the dataset for improved molecular structure recognition.
 
 
 ## Codebase
 
-[RePaint](https://github.com/andreas128/RePaint.git)
+- [RePaint](https://github.com/andreas128/RePaint.git)
 
-[guided-diffusion](https://github.com/openai/guided-diffusion.git)
+- [guided-diffusion](https://github.com/openai/guided-diffusion.git)
 
 
 ## OCSAug (updated June 4, 2025)
@@ -32,7 +33,7 @@ conda install -c conda-forge openmpi
 pip install --upgrade gdown
 ```
 
-## Data Download
+### Data Download
 
 You can obtain all required files by running the following scripts:
 
@@ -58,7 +59,7 @@ You can download the original data from [DECIMER - Hand-drawn molecule images da
 `data`, `ckpt` : [Link1](https://drive.google.com/drive/folders/1VUrszbXm2FBVL6JzIH-0H5L1XSxMV7DL?usp=sharing)
 `hand_drawn_image` : [Link2](https://drive.google.com/file/d/1Aetloltpf9FnXzYWt927RcQ7i5MOEdc5/view?usp=sharing)
 
-## Sampling
+### Sampling
 
 Change to the RePaint directory.
 ```bash
@@ -73,7 +74,7 @@ If you wish to sample using a trained model, you will need to run the following 
 
 Following this section, the document will provide instructions on how to train your model, detailing the necessary steps and configurations needed to effectively train a model using the provided dataset and parameters.
 
-## Training
+### Training
 
 Change to the guided-diffusion directory.
 ```bash
@@ -103,12 +104,12 @@ TRAIN_FLAGS="--use_fp16 False --lr 2e-5 --batch_size 32 --log_interval 10 --save
 The `batch_size` of 64 should be tailored based on the available VRAM. If you prefer a `batch_size` of 64 but have limited VRAM, you can adjust this setting using the `microbatch` option.
 
 
-#### example `microbatch`
+#### Example of `microbatch`
 ```bash
 TRAIN_FLAGS="--use_fp16 False --lr 2e-5 --batch_size 32  --microbatch 1 --log_interval 10 --save_interval 1000"
 ```
 
-## Training scripts
+### Training scripts
 
 ```bash
 python scripts/image_train.py --data_dir ../data/train $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
