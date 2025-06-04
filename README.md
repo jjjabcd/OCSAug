@@ -1,14 +1,19 @@
 # OCSAug
 OCSAug: Diffusion-based Optical Chemical Structure Data Augmentation for Improved Hand-drawn Chemical Structure Image Recognition
 
-codebase
+[Paper](https://link.springer.com/article/10.1007/s11227-025-07406-4)
+
+In short, hand-drawn molecular structure images are processed through a diffusion-based data augmentation framework, which can generate new variations while preserving the essential structural characteristics. The framework takes hand-drawn molecular structure images as input and produces diverse augmented images that maintain the original features while introducing controlled variations, effectively expanding the dataset for improved molecular structure recognition.
+
+
+## codebase
 
 [RePaint](https://github.com/andreas128/RePaint.git)
 
 [guided-diffusion](https://github.com/openai/guided-diffusion.git)
 
 
-## OCSAug
+## OCSAug (updated June 4, 2025)
 
 ### Environment
 
@@ -110,3 +115,16 @@ python scripts/image_train.py --data_dir ../data/train $MODEL_FLAGS $DIFFUSION_F
 ```
 
 Note: `export OPENAI_LOGDIR` sets the location for DDPM training logs. If not set, logs are saved in the `/tmp` folder. The model checkpoints are saved at intervals specified by `save_interval` and are named in the format `opt_0.999_{step}`, `ema_0.999_{step}`, `model_0.999_{step}`. Use the `ema` prefixed file for sampling. Training does not have a predefined maximum step; it should be determined based on the quality of image samples from the checkpoints. 
+
+
+# Author
+
+[Jin Hyuk Kim](https://scholar.google.com/citations?user=8ly72dcAAAAJ&hl=ko)
+
+[Jonghwan Choi](https://scholar.google.com/citations?user=4xSw9C8AAAAJ&hl=ko)
+
+# Contacts
+
+- Email: rlawlsgurjh@gmail.com
+
+Feel free to reach out to us with any questions!
